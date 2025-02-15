@@ -1,6 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 #include <conio2.h>
+#include <iostream>
+#include <windows.h>
 class Game {
 public:
 	Game();
