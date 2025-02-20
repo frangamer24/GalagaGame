@@ -3,6 +3,10 @@
 #include <conio2.h>
 #include <iostream>
 #include <windows.h>
+#include "entity.h"
+#include "Enemigo.h"
+#include "player.h"
+
 class Game {
 public:
 	Game();
@@ -11,12 +15,15 @@ public:
 private:
 	//atributos
 	bool isOpen=true;
+	Player* player;
+	Enemigo* enemigo;
 	
-	//metodos
-	void progressImput();
+	//metodos	
+	void clear();
+	void progressInput();
 	void update();
 	void draw();
-	void clear();
+
 };
 
 #endif

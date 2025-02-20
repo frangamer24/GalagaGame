@@ -1,9 +1,7 @@
 #include "Game.h"
-
+#include <conio2.h>
 Game::Game() {
-	
-	using namespace std;
-	
+		using namespace std;
 	const int ancho=27;
 	const int alto=12;
 	
@@ -31,43 +29,57 @@ Game::Game() {
 
 void Game::clear()
 {
+	player->clear();
+	enemigo->clear();
 	
 }
 
 void Game::draw()
-{
+{	
+	player->draw();
+	enemigo->draw();
 	
 }
 
-void Game::progressImput()
+void Game::progressInput()
 {
-	
+  
 	if(kbhit())
 	{
-		int imput=getch();
+		int input=getch();
 		
-		switch(imput)
+		switch(input)
 		{
 		case 27:
 			isOpen=false;
 			break;
+			
 		}
+		
 	}
+	player->inputProgress();
 	
 }
 
 void Game::update()
 {
+	player->update();
+	enemigo->update();
 	
 }
 
 void Game::run()
 {
+	
+	player=new Player();
+	enemigo=new Enemigo();
+	
 	while(isOpen)
 	{
 		clear();
-		progressImput();
+		progressInput();
 		update();
 		draw();
+		Sleep(20);
 	}
 }
