@@ -4,31 +4,39 @@
 using namespace std; 
 Enemigo::Enemigo(){
 	
-	pocition.x=2;
-	pocition.y=5;
+	position.x=2;
+	position.y=5;
 	direction=1;
 }
 void Enemigo::update() {
 	
-	if(pocition.x>=24)
+	if(position.x>=26)
 	{
 		direction = -1;
 	}
-	if(pocition.x<=3)
+	if(position.x<=3)
 	{
 		direction = 1;
 	}
 	
-	pocition.x +=direction;
+	position.x +=direction;
 }
 void Enemigo::clear() {
 	
-	gotoxy(pocition.x, pocition.y);
+	gotoxy(position.x, position.y);
 	cout<<" ";
 }
 void Enemigo::draw() {
 	
-	gotoxy(pocition.x, pocition.y);
+	gotoxy(position.x, position.y);
 	cout<<"X";
 	
+}
+int Enemigo::GetX()
+{
+	return position.x;
+}
+int Enemigo::GetY()
+{
+	return position.y;
 }

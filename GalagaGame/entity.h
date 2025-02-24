@@ -6,7 +6,7 @@
 
 using namespace std;
 
-struct Pocition
+struct Position
 {
 	int x{};
 	int y{};
@@ -22,7 +22,7 @@ public:
 	
 protected:
 	//atributos
-	Pocition pocition;
+	Position position;
 	//metodos
 	
 };

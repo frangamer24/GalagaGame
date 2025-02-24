@@ -10,6 +10,8 @@ public:
 	void draw();
 	void clear();
 	
+	int GetX();
+	int GetY();
 private:
 	
 	int direction;

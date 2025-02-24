@@ -7,7 +7,7 @@ Game::Game() {
 	
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
-	cout<<"teclas de movimiento: WASD"<<endl;
+	cout<<"teclas de movimiento: flechas"<<endl;
 	cout<<"disparar con la tecla:ESPACIO"<<endl;
 	cout<<"debes disparar a las X, cuidado con los asteroides!"<<endl;
 	SetConsoleTextAttribute(hConsole, 7);
@@ -25,8 +25,8 @@ Game::Game() {
 		}
 		cout<<endl;
 	}
+	
 }
-
 void Game::clear()
 {
 	player->clear();
@@ -50,7 +50,7 @@ void Game::progressInput()
 		
 		switch(input)
 		{
-		case 27:
+		case 12:
 			isOpen=false;
 			break;
 			
@@ -66,6 +66,14 @@ void Game::update()
 	player->update();
 	enemigo->update();
 	
+	if(player->colicionConEnemigo(*enemigo))
+	{
+		player->perderVida();
+	}
+	if(player->getvida()<=0)
+	{
+		isOpen=false;
+	}
 }
 
 void Game::run()
@@ -80,6 +88,17 @@ void Game::run()
 		progressInput();
 		update();
 		draw();
+		player->mostrarvida();
 		Sleep(20);
 	}
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
+	cout<<endl;
 }
