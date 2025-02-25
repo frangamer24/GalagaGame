@@ -2,6 +2,7 @@
 #define PLAYER_H
 #include "Entity.h"
 #include "Enemigo.h"
+#include "Meteorito.h"
 
 class Player : public Entity 
 {
@@ -9,6 +10,7 @@ public:
 	Player();
 	
 	bool colicionConEnemigo(Enemigo enemigo);
+	bool colicionConMeteorito(Meteorito meteorito);
 	void draw();
 	void update();
 	void clear();
@@ -19,6 +21,8 @@ public:
 private:
 	
 	int vida;
+	bool invulnerable;
+	int tiempoInvulnerabilidad;
 	
 };
 

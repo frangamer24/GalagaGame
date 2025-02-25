@@ -6,6 +6,7 @@
 #include "entity.h"
 #include "Enemigo.h"
 #include "player.h"
+#include "Meteorito.h"
 
 class Game {
 public:
@@ -17,6 +18,7 @@ private:
 	bool isOpen=true;
 	Player* player;
 	Enemigo* enemigo;
+	Meteorito*meteorito;
 	
 	//metodos	
 	void clear();

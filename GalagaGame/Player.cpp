@@ -5,6 +5,9 @@ Player::Player() {
 	position.x=12;
 	position.y=14;
 	vida=5;
+	invulnerable = false;
+	tiempoInvulnerabilidad = 0;
+
 }
 void Player::clear()
 {
@@ -19,7 +22,12 @@ void Player::draw()
 }
 void Player::update()
 {
-	
+	if (invulnerable) {
+		tiempoInvulnerabilidad--;
+		if (tiempoInvulnerabilidad <= 0) {
+			invulnerable = false;
+		}
+	}
 }
 int Player::getvida()
 {
@@ -39,17 +47,17 @@ void Player::mostrarvida()
 }
 void Player::perderVida()
 {
-	if(vida>0)
-	{
+	if (!invulnerable) { 
 		vida--;
 		mostrarvida();
+		invulnerable = true; 
+		tiempoInvulnerabilidad = 10; 
 	}
-	
 	
 	if(vida<=0)
 	{
 		gotoxy(10,10);
-		cout<<"game over";
+		cout<<"GAME OVER";
 		
 
 	}
@@ -58,6 +66,10 @@ void Player::perderVida()
 bool Player ::colicionConEnemigo(Enemigo enemigo)
 {
 	return (position.x==enemigo.GetX()&&position.y==enemigo.GetY());
+}
+bool Player::colicionConMeteorito(Meteorito meteorito)
+{
+	return (position.x==meteorito.GetX()&&position.y==meteorito.GetY());
 }
 void Player::inputProgress()
 {

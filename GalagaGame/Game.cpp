@@ -31,6 +31,7 @@ void Game::clear()
 {
 	player->clear();
 	enemigo->clear();
+	meteorito->clear();
 	
 }
 
@@ -38,7 +39,7 @@ void Game::draw()
 {	
 	player->draw();
 	enemigo->draw();
-	
+	meteorito->draw();
 }
 
 void Game::progressInput()
@@ -65,8 +66,18 @@ void Game::update()
 {
 	player->update();
 	enemigo->update();
+	meteorito->update();
 	
 	if(player->colicionConEnemigo(*enemigo))
+	{
+		player->perderVida();
+	}
+	if(player->getvida()<=0)
+	{
+		isOpen=false;
+	}
+	
+	if(player->colicionConMeteorito(*meteorito))
 	{
 		player->perderVida();
 	}
@@ -81,6 +92,7 @@ void Game::run()
 	
 	player=new Player();
 	enemigo=new Enemigo();
+	meteorito=new Meteorito();
 	
 	while(isOpen)
 	{
