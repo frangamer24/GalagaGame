@@ -1,0 +1,40 @@
+#include "Bala.h"
+#include <iostream>
+
+Bala::Bala(int x, int y) 
+{
+	position.x=x;
+	position.y=y;
+	active=true;
+	
+}
+
+void Bala::update ( ) 
+{
+	position.y--;
+}
+void Bala::draw() 
+{
+	if(active)
+	{
+		gotoxy(position.x,position.y);
+		cout<<"|";
+	}
+}
+
+void Bala::clear ( ) 
+{
+	gotoxy(position.x,position.y);
+	cout<<" ";
+}
+bool Bala::isOffScreen() {
+	return position.y < 5; 
+}
+int Bala::GetX()
+{
+	return position.x;
+}
+int Bala::GetY()
+{
+	return position.y;
+}

@@ -9,6 +9,7 @@ public:
 	void update();
 	void draw();
 	void clear();
+	void resetPosition();
 	
 	int GetX();
 	int GetY();

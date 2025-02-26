@@ -32,6 +32,11 @@ void Enemigo::draw() {
 	cout<<"X";
 	
 }
+void Enemigo::resetPosition()
+{
+	position.x=2;
+	position.y=5;
+}
 int Enemigo::GetX()
 {
 	return position.x;
