@@ -2,8 +2,10 @@
 #define BALA_H
 #include "entity.h"
 
+	
 class Bala : public Entity {
 public:
+	Bala();
 	Bala(int x, int y);
 	void update ( ) override;
 	void draw ( ) override;
@@ -12,10 +14,9 @@ public:
 	
 	int GetX();
 	int GetY();
-private:
-	
+private:		
 	bool active;
 };
-
+	
 #endif
-
+	

@@ -1,10 +1,11 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include <vector>
 #include "Entity.h"
 #include "Enemigo.h"
 #include "Meteorito.h"
 #include "Bala.h"
+
+#define MAX_BALAS 10
 
 class Player : public Entity 
 {
@@ -19,6 +20,7 @@ public:
 	void mostrarvida();
 	void mostrarPuntaje();
 	void perderVida();
+	void inputProgress();
 	void inputProgress(int input);
 	int getvida();
 	void disparar();
@@ -30,9 +32,9 @@ private:
 	int puntaje;
 	bool invulnerable;
 	int tiempoInvulnerabilidad;
-	std::vector<Bala> balas;  
+	Bala balas[MAX_BALAS];  
+	bool balasActivas[MAX_BALAS] = {false}; // Inicializamos en falso
 	
 };
 
 #endif
-

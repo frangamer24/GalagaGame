@@ -2,11 +2,13 @@
 #include <conio2.h>
 Game::Game() {
 	using namespace std;
+	using namespace std;
 	const int ancho=27;
 	const int alto=12;
 	
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, FOREGROUND_BLUE);
+	cout<<"teclas de movimiento: flechas"<<endl;
 	cout<<"teclas de movimiento: WASD"<<endl;
 	cout<<"disparar con la tecla:ESPACIO"<<endl;
 	cout<<"debes disparar a las X, cuidado con los asteroides!"<<endl;
@@ -44,21 +46,24 @@ void Game::draw()
 
 void Game::progressInput()
 {
-  
+	
 	if(kbhit())
 	{
 		int input=getch();
 		
 		switch(input)
 		{
+		case 12:
 		case 27:
 			isOpen=false;
 			break;
 			
 		}
-			player->inputProgress(input);
+		
+		player->inputProgress(input);
 	}
-
+	
+	
 	
 }
 

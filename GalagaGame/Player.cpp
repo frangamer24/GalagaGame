@@ -1,34 +1,37 @@
 #include "Player.h"
-#include "Entity.h"
+#include <iostream>
+
 Player::Player() {
-	
-	position.x=12;
-	position.y=14;
-	vida=5;
-	puntaje=0;
+	position.x = 12;
+	position.y = 14;
+	vida = 5;
+	puntaje = 0;
 	invulnerable = false;
 	tiempoInvulnerabilidad = 0;
-}
-void Player::clear()
-{
-	gotoxy(position.x,position.y);
-	cout<<" ";
-
-	for (auto& bala : balas) {
-		bala.clear();
+	
+	for (int i = 0; i < MAX_BALAS; i++) {
+		balasActivas[i] = false;
 	}
 }
-void Player::draw()
-{
-	gotoxy(position.x,position.y);
-	cout<<"A";
+
+void Player::clear() {
+	gotoxy(position.x, position.y);
+	std::cout << " ";
 	
-	
+	for (int i = 0; i < MAX_BALAS; i++) {
+		if (balasActivas[i]) {
+			balas[i].clear();
+		}
+	}
 }
-void Player::update()
-{
+
+void Player::draw() {
+	gotoxy(position.x, position.y);
+	std::cout << "A";
+}
+
+void Player::update() {
 	manejarBalas();
-	
 	if (invulnerable) {
 		tiempoInvulnerabilidad--;
 		if (tiempoInvulnerabilidad <= 0) {
@@ -36,138 +39,106 @@ void Player::update()
 		}
 	}
 }
+
 void Player::disparar() {
-	balas.push_back(Bala(position.x, position.y - 1)); 
-}
-void Player::manejarBalas() {
-	for (size_t i = 0; i < balas.size(); i++) {
-		balas[i].clear();
-		balas[i].update();
-		if (balas[i].isOffScreen()) {
-			balas.erase(balas.begin() + i); 
-			i--; 
-		} else {
-			balas[i].draw();
+	for (int i = 0; i < MAX_BALAS; i++) {
+		if (!balasActivas[i]) {
+			balas[i] = Bala(position.x, position.y - 1);
+			balasActivas[i] = true;
+			break;
 		}
 	}
 }
-int Player::getvida()
-{
+
+void Player::manejarBalas() {
+	for (int i = 0; i < MAX_BALAS; i++) {
+		if (balasActivas[i]) {
+			balas[i].clear();
+			balas[i].update();
+			if (balas[i].isOffScreen()) {
+				balasActivas[i] = false;
+			} else {
+				balas[i].draw();
+			}
+		}
+	}
+}
+
+int Player::getvida() {
 	return vida;
 }
-void Player::mostrarvida()
-{
-	gotoxy(30,6);
-	
+
+void Player::mostrarvida() {
+	gotoxy(30, 6);
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-	
-	cout<<"vida: ";
-	cout<<"("<< vida<<")";
-	
+	std::cout << "vida: (" << vida << ")";
 	SetConsoleTextAttribute(hConsole, 7);
 }
+
 void Player::mostrarPuntaje() {
-	
 	gotoxy(30, 5);
-	
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole, FOREGROUND_RED);
-	
 	std::cout << "Puntaje: " << puntaje << " ";
-	
 	SetConsoleTextAttribute(hConsole, 7);
 }
-void Player::perderVida()
-{
-	if (!invulnerable) { 
+
+void Player::perderVida() {
+	if (!invulnerable) {
 		vida--;
 		mostrarvida();
-		invulnerable = true; 
-		tiempoInvulnerabilidad = 10; 
+		invulnerable = true;
+		tiempoInvulnerabilidad = 10;
 	}
-	
-	if(vida<=0)
-	{
-		gotoxy(10,10);
-		cout<<"GAME OVER";
-		
+	if (vida <= 0) {
+		gotoxy(10, 10);
+		std::cout << "GAME OVER";
+	}
+}
 
-	}
-	
+bool Player::colicionConEnemigo(Enemigo enemigo) {
+	return (position.x == enemigo.GetX() && position.y == enemigo.GetY());
 }
-bool Player ::colicionConEnemigo(Enemigo enemigo)
-{
-	return (position.x==enemigo.GetX()&&position.y==enemigo.GetY());
-}
+
 void Player::colicionBalaEnemigo(Enemigo &enemigo) {
-	for (size_t i = 0; i < balas.size(); i++) {
-		if (balas[i].GetX() == enemigo.GetX() && balas[i].GetY() == enemigo.GetY()) {
-			balas.erase(balas.begin() + i); 
-			enemigo.resetPosition(); 
-			puntaje += 10; 
+	for (int i = 0; i < MAX_BALAS; i++) {
+		if (balasActivas[i] && balas[i].GetX() == enemigo.GetX() && balas[i].GetY() == enemigo.GetY()) {
+			balasActivas[i] = false;
+			enemigo.resetPosition();
+			puntaje += 10;
 			mostrarPuntaje();
-			break; 
+			break;
 		}
 	}
 }
-bool Player::colicionConMeteorito(Meteorito meteorito)
-{
-	return (position.x==meteorito.GetX()&&position.y==meteorito.GetY());
+
+bool Player::colicionConMeteorito(Meteorito meteorito) {
+	return (position.x == meteorito.GetX() && position.y == meteorito.GetY());
 }
 
-void Player::inputProgress(int input)
-{
-	
+void Player::inputProgress(int input) {
 	const int LimiteIzquierdo = 2;
 	const int LimiteDerecho = 25;
-	const int LimiteArriba = 5;
-	const int LimiteAbajo = 14;
+	const int LimiteArriba = 6;
+	const int LimiteAbajo = 15;
 	
 	switch (input) {
-	case 87: 
-		if (position.y > LimiteArriba)
-		{
-			position.y -= 1;
-		}
-	case 119: 
-		if (position.y > LimiteArriba)
-		{
-			position.y -= 1;
-		}
+	case 87:
+	case 119:
+		if (position.y > LimiteArriba) position.y -= 1;
 		break;
-	case 83: 
-		if (position.y < LimiteAbajo)
-		{
-			position.y += 1;
-		} 
-	case 115: 
-		if (position.y < LimiteAbajo)
-		{
-			position.y += 1;
-		} 
+	case 83:
+	case 115:
+		if (position.y < LimiteAbajo) position.y += 1;
 		break;
-	case 65: 
-		if (position.x > LimiteIzquierdo)
-		{
-			position.x -= 1;
-		} 
-	case 97: 
-		if (position.x > LimiteIzquierdo)
-		{
-			position.x -= 1;
-		} 
+	case 65:
+	case 97:
+		if (position.x > LimiteIzquierdo) position.x -= 1;
 		break;
-	case 68: 
-		if (position.x < LimiteDerecho)
-		{
-			position.x += 1;
-		}
-	case 100: 
-		if (position.x < LimiteDerecho)
-		{
-			position.x += 1;
-		}
+	case 68:
+	case 100:
+		if (position.x < LimiteDerecho) position.x += 1;
 		break;
 	case 32:
 		disparar();

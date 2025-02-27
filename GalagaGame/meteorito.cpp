@@ -4,7 +4,7 @@
 Meteorito::Meteorito() {
 	
 	position.x=rand()%24+2;
-	position.y=5;
+	position.y=6;
 	velocidad=1;
 	contadorCaida = 0;
 	
@@ -28,14 +28,14 @@ void Meteorito::update()
 		contadorCaida = 0;
 	}
 	
-	if (position.y >= 15) { 
+	if (position.y >= 16) { 
 		resetPosition();
 	}
 }
 void Meteorito::resetPosition()
 {
 	position.x=rand()%24+2;
-	position.y=5;
+	position.y=6;
 	
 }
 int Meteorito::GetX()

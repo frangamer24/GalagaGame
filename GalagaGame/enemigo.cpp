@@ -1,11 +1,11 @@
 #include "enemigo.h"
 #include <iostream>
-
-using namespace std; 
+	
+	using namespace std; 
 Enemigo::Enemigo(){
 	
 	position.x=2;
-	position.y=5;
+	position.y=6;
 	direction=1;
 }
 void Enemigo::update() {
@@ -35,7 +35,7 @@ void Enemigo::draw() {
 void Enemigo::resetPosition()
 {
 	position.x=2;
-	position.y=5;
+	position.y=6;
 }
 int Enemigo::GetX()
 {
